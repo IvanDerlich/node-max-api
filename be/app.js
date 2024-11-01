@@ -85,12 +85,7 @@ const startServer = () => {
     console.log(`Server is running on port ${PORT}`);
   });
 
-  const io = require("./socket").init(httpServer, {
-    cors: {
-      origin: "http://localhost:3000",
-      methods: ["GET", "POST"],
-    },
-  });
+  const io = require("./socket").init(httpServer);
   io.on("connection", (socket) => {
     console.log("Client connected through socket.io");
     console.log("socket.id: ", socket.id);
