@@ -44,12 +44,12 @@ class Feed extends Component {
     this.loadPosts();
     const socket = openSocket("http://localhost:8080");
     socket.on("posts", (data) => {
-      console.log("Subscribing to posts");
+      console.log("Something happened with posts");
       console.log("data: ", data);
       if (data.action === "create") {
         this.addPost(data.post);
       }
-      if (data.action === "delete") {
+      if (data.action === "delete" || data.action === "update") {
         this.loadPosts();
       }
     });

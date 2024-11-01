@@ -14,3 +14,9 @@ For development be careful using Windows.
 I haven't tested it but it might fail because the file systems of the docker containers
 and windows might bring issue.
 Maybe not, but be careful.
+
+# Technologies used
+
+- socket.io
+- REST API Fullstack
+- React
