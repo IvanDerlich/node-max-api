@@ -1,5 +1,6 @@
 const Post = require("../../models/post");
 const clearImage = require("./helpers").clearImage;
+const io = require("../../socket");
 
 module.exports = async (req, res, next) => {
   console.log("updatePost requested");
@@ -44,13 +45,15 @@ module.exports = async (req, res, next) => {
     post.imageUrl = imageUrl;
     console.log("new imageUrl:", post.imageUrl);
 
-    const response = await post.save();
+    const udatedPost = await post.save();
 
     if (imageUrl !== oldImageUrl) {
       clearImage(oldImageUrl);
     }
 
-    return res.status(200).json({ message: "Post updated!", post: response });
+    // Inform all users that a post has been updated
+    io.getIO().emit("posts", { action: "update", post: udatedPost });
+    return res.status(200).json({ message: "Post updated!", post: udatedPost });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;
